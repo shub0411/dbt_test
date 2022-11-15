@@ -1,0 +1,24 @@
+{
+  "name": "Aretove DBT Development",
+  "build": {
+    "dockerfile": "Dockerfile", // Be sure to change this depending on DWH
+    "context": "..",
+     //Update 'VARIANT' to pick a DBT version
+    "args": {
+      "RELEASE": "1.3.latest"
+    }
+  },
+  "runArgs": [
+    "--env-file", ".env"
+  ],
+  "containerEnv": {
+    "DBT_PROFILES_DIR": "./"
+  },
+
+  "extensions": ["dorzey.vscode-sqlfluff", "innoverio.vscode-dbt-power-user", "eamodio.gitlens", "ms-python.python", "hashicorp.terraform"],
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/host-home-folder/.ssh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.dbt,target=/host-home-folder/.dbt,type=bind,consistency=cached"
+    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/.soda,target=/host-home-folder/.soda,type=bind,consistency=cached"
+  ]
+}
