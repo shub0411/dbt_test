@@ -1,33 +1,16 @@
 config:
   send_anonymous_usage_stats: false
-
-# To use this, create a .env file in your project folder root
-# This file will not be checked into git - it is listed in the .gitignore
-# after creating the .env file, reload the container for docker to recognize the file
-# fill it with each env variable:
-#DBT_ENV_SECRET_USER=<user>
-#DBT_ENV_SECRET_PASS=<password>
-#DBT_ENV_ORG=<org name>
-#DBT_ENV_WAREHOUSE=<warehouse name>
-#DBT_ENV_ROLE=<role name>
-#SNOWFLAKE_ACCOUNT=<snowflake account name>
-
-cookunity-snowflake:
-  target: dev
+dbt_aretove:
   outputs:
     dev:
-      type: snowflake
       account: '{{ env_var("SNOWFLAKE_ACCOUNT") }}'
-      # User/password auth
-      user: '{{ env_var("DBT_ENV_SECRET_USER") }}'
-      password: '{{ env_var("DBT_ENV_SECRET_PASS") }}'
-
-      # Okta/SSO auth
-      # authenticator: https://{{ env_var("DBT_ENV_ORG") }}.okta.com
-
-      role: '{{ env_var("DBT_ENV_ROLE") }}'
       database: '{{ env_var("DBT_ENV_ORG") }}_DBT_DEV'
-      warehouse: '{{ env_var("DBT_ENV_WAREHOUSE") }}'
+      password: '{{ env_var("DBT_ENV_SECRET_PASS") }}'
+      query_tag: dbt_dev
+      role: '{{ env_var("DBT_ENV_ROLE") }}'
       schema: '{{ env_var("DBT_ENV_SECRET_USER") }}'
       threads: 8
-      query_tag: dbt_dev
+      type: snowflake
+      user: '{{ env_var("DBT_ENV_SECRET_USER") }}'
+      warehouse: '{{ env_var("DBT_ENV_WAREHOUSE") }}'
+  target: dev
